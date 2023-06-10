@@ -25,7 +25,7 @@ import { OxIconsRegistry } from './ox-icons-registry.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OxIconsComponent {
-    private svgIcon: SVGElement | undefined | string = undefined;
+    private svgIcon: SVGElement | undefined = undefined;
     // @ViewChild('text') icon: ElementRef | undefined ;
     @Input()
     set name(iconName: oxIcons) {
