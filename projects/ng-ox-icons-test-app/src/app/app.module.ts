@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent }                   from './app.component';
-import { OxIconsModule, OxIconsRegistry } from 'ng-ox-icons';
-import { oxIconsDotsHorizontal }          from 'ox-icons';
+import { OxIconsModule, OxIconsRegistry }       from 'ng-ox-icons';
+import { oxIconsAnchor, oxIconsDotsHorizontal } from 'ox-icons';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,6 @@ import { oxIconsDotsHorizontal }          from 'ox-icons';
 })
 export class AppModule {
   constructor(private readonly oxIconRegistry: OxIconsRegistry) {
-    oxIconRegistry.registerIcons([oxIconsDotsHorizontal]);
+    oxIconRegistry.registerIcons([oxIconsDotsHorizontal, oxIconsAnchor]);
   }
 }

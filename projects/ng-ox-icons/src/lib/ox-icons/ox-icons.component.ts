@@ -1,12 +1,12 @@
 import {
   AfterContentInit, AfterViewInit,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
-  Input,
+  Input, OnChanges,
   OnInit,
-  Optional,
+  Optional, SimpleChanges,
   ViewChild
 } from '@angular/core';
 // tslint:disable-next-line:import-spacing
@@ -17,7 +17,7 @@ import { OxIconsRegistry } from './ox-icons-registry.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
-    selector: 'ox-icons',
+    selector: 'ox-icon',
     template: `
       <span #text style="display: none">
         <ng-content></ng-content>
@@ -26,9 +26,10 @@ import { OxIconsRegistry } from './ox-icons-registry.service';
     styles: [':host::ng-deep svg{width: 20px; height: 20px}'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OxIconsComponent implements AfterViewInit{
+export class OxIconsComponent implements AfterViewInit {
     private svgIcon: SVGElement | undefined | string = undefined;
     @ViewChild('text') icon: ElementRef | undefined ;
+    @Input() svgStrokeColor: string | undefined = '#5F5C5C' ;
 
     @Input()
     set name(iconName: oxIcons) {
@@ -44,20 +45,25 @@ export class OxIconsComponent implements AfterViewInit{
       }
     }
 
-    constructor(private element: ElementRef, private oxIconsRegistry: OxIconsRegistry,
+    constructor(private element: ElementRef,
+                private readonly oxIconsRegistry: OxIconsRegistry,
                 @Optional() @Inject(DOCUMENT) private document: any) {
     }
 
     ngAfterViewInit(): void{
-      if (this.icon){
-        this.name = this.icon?.nativeElement.textContent.trim();
-        const svgData = this.oxIconsRegistry.getIcon(this.name);
+      if (this.icon?.nativeElement.textContent.trim() !== ''){
+        if (this.svgIcon) {
+          this.element.nativeElement.removeChild(this.svgIcon);
+        }
+        const svgData = this.oxIconsRegistry.getIcon(this.icon?.nativeElement.textContent.trim());
         if (svgData) {
           this.svgIcon = this.svgElementFromString(svgData);
           this.element.nativeElement.appendChild(this.svgIcon);
         }
       }
     }
+
+  // tslint:disable-next-line:typedef
 
   private svgElementFromString(svgContent: string): SVGElement {
         const div = this.document.createElement('DIV');

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component }                            from '@angular/core';
+import { OxIconsRegistry }                      from 'ng-ox-icons';
+import { oxIconsAnchor, oxIconsDotsHorizontal } from 'ox-icons';
 
 @Component({
   selector: 'app-root',
