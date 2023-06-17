@@ -32,7 +32,9 @@ import { v4 as uuidv4 } from 'uuid';
 export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChecked {
     private svgIcon: SVGElement | undefined | string = undefined;
     @ViewChild('text') icon: ElementRef | undefined ;
-    @Input() svgStrokeColor = '#5F5C5C';
+    // @Input() svgStrokeColor = '#5F5C5C';
+    @Input() height: string | undefined ;
+    @Input() width: string | undefined ;
     iconNameText: string | oxIcons = '';
     iconClass: string;
 
@@ -48,7 +50,7 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         const svgData = this.oxIconsRegistry.getIcon(iconName);
         if (svgData) {
 
-            this.svgIcon = this.svgElementFromString(svgData, this.svgStrokeColor);
+            this.svgIcon = this.svgElementFromString(svgData);
             this.element.nativeElement.appendChild(this.svgIcon);
         }
       }
@@ -70,7 +72,7 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         }
         const svgData = this.oxIconsRegistry.getIcon(this.icon?.nativeElement.textContent.trim());
         if (svgData) {
-          this.svgIcon = this.svgElementFromString(svgData, this.svgStrokeColor);
+          this.svgIcon = this.svgElementFromString(svgData);
           this.element.nativeElement.appendChild(this.svgIcon);
         }
       }
@@ -87,7 +89,7 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         }
         const svgData = this.oxIconsRegistry.getIcon(changes.name?.currentValue.trim());
         if (svgData) {
-          this.svgIcon = this.svgElementFromString(svgData, changes.svgStrokeColor?.currentValue);
+          this.svgIcon = this.svgElementFromString(svgData);
           // this.svgIcon.children[1].setAttribute('stroke', 'blue');
 
           // this.renderer.setAttribute( this.svgIcon.children[1], 'stroke', 'blue');
@@ -96,12 +98,19 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
       } else {
         // console.log( changes.svgStrokeColor?.currentValue);
         if (this.document.querySelector(`.${this.iconClass}`)){
+          if (changes?.width && changes?.height){
+            this.changeSize(this.document.querySelector(`.${this.iconClass}`),  changes?.width.currentValue, changes?.height.currentValue);
+          }else if (changes?.width){
+            this.changeSize(this.document.querySelector(`.${this.iconClass}`),  changes?.width.currentValue, changes?.width.currentValue);
+          }else if (changes?.height){
+            this.changeSize(this.document.querySelector(`.${this.iconClass}`),  changes?.height.currentValue, changes?.height.currentValue);
+          }
           // console.log(this.document.querySelector(`.${this.iconClass}`));
           //  let childrenArray = Array.from(this.document.querySelector(`.${this.iconClass}`).children);
           // childrenArray.map(x => {
           //   console.log((x as HTMLElement).nodeName);
           // });
-          this.changeColor(this.document.querySelector(`.${this.iconClass}`).children[1], changes.svgStrokeColor?.currentValue);
+          // this.changeColor(this.document.querySelector(`.${this.iconClass}`).children[1], changes.svgStrokeColor?.currentValue);
         }
       }
     }
@@ -113,7 +122,7 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         }
         const svgData = this.oxIconsRegistry.getIcon(this.icon?.nativeElement.textContent.trim());
         if (svgData) {
-          this.svgIcon = this.svgElementFromString(svgData, this.svgStrokeColor);
+          this.svgIcon = this.svgElementFromString(svgData);
           this.element.nativeElement.appendChild(this.svgIcon);
         }
       }
@@ -121,18 +130,29 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
 
   // tslint:disable-next-line:typedef
 
-  private svgElementFromString(svgContent: string, color?: string): SVGElement {
+  private svgElementFromString(svgContent: string): SVGElement {
         const div = this.document.createElement('DIV');
         div.innerHTML = svgContent;
-        this.changeColor(div.querySelector('svg').children[1],  color);
         this.renderer.addClass(div.querySelector('svg'), this.iconClass);
+        // this.changeColor(div.querySelector('svg').children[1],  color);
+        console.log(div.querySelector(`.${this.iconClass}`), this.width, this.height);
+        if (this.width && this.height){
+          this.changeSize(div.querySelector(`.${this.iconClass}`),  this.width, this.height);
+        }else if (this.width){
+          this.changeSize(div.querySelector(`.${this.iconClass}`),  this.width, this.width);
+        }else if (this.height){
+          this.changeSize(div.querySelector(`.${this.iconClass}`),  this.height, this.height);
+        }
         return div.querySelector('svg') || this.document.createElementNS('http://www.w3.org/2000/svg', 'path');
     }
 
   // tslint:disable-next-line:typedef
-  changeColor(element: any, strokeColor: string | undefined){
-      if (typeof strokeColor === 'string') {
-        this.renderer?.setAttribute(element, 'stroke', strokeColor);
-      }
+  changeSize(element: any, width?: string | undefined, height?: string | undefined){
+    if (typeof width === 'string') {
+      this.renderer?.setStyle(element, 'width', width);
+    }
+    if (typeof height === 'string') {
+      this.renderer?.setStyle(element, 'height', height);
+    }
   }
 }

@@ -12,10 +12,19 @@ export class AppComponent {
   iconName: oxIcons = 'anchor';
 
 
+
+
   // tslint:disable-next-line:typedef
-  color: string = 'green';
-  changeIcon() {
+  // color: string = 'green';
+  // size: string = '35';
+  // width: string = '25';
+  // height: string = '25';
+  // changeIcon() {
     // this.iconName = 'dots_horizontal';
-    this.color = 'red';
-  }
+    // this.size = '160';
+
+    // this.width = '160';
+    // this.height = '60';
+
+  // }
 }

@@ -1,27 +1,27 @@
-//:host::ng-deep .anchor{
-//  //&:hover{
-//    svg{
-//      path{
-//        stroke: red;
-//      }
-//    }
-//  //}
-//}
-//
-//:host::ng-deep .dots{
-//  //&:hover{
-//    svg{
-//      path{
-//        stroke: limegreen;
-//      }
-//    }
-//  //}
-//}
-//
-//:host::ng-deep .static-anchor{
-//    svg{
-//      path{
-//        stroke: blueviolet;
-//      }
-//    }
-//}
+:host::ng-deep .anchor{
+  //&:hover{
+    svg{
+      path{
+        stroke: red;
+      }
+    }
+  //}
+}
+
+:host::ng-deep .dots{
+  //&:hover{
+    svg{
+      path{
+        stroke: limegreen;
+      }
+    }
+  //}
+}
+
+:host::ng-deep .static-anchor{
+    svg{
+      path{
+        stroke: blueviolet;
+      }
+    }
+}
