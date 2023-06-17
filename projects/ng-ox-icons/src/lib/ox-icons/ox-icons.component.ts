@@ -32,7 +32,6 @@ import { v4 as uuidv4 } from 'uuid';
 export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChecked {
     private svgIcon: SVGElement | undefined | string = undefined;
     @ViewChild('text') icon: ElementRef | undefined ;
-    // @Input() svgStrokeColor = '#5F5C5C';
     @Input() height: string | undefined ;
     @Input() width: string | undefined ;
     iconNameText: string | oxIcons = '';
@@ -40,8 +39,6 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
 
     @Input()
     set name(iconName: oxIcons) {
-      // console.log(iconName);
-      // console.log('color', this.svgStrokeColor);
       if (iconName) {
         this.iconNameText = iconName;
         if (this.svgIcon) {
@@ -56,17 +53,15 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
       }
     }
 
-    constructor(private element: ElementRef,
+    constructor(private readonly element: ElementRef,
                 private readonly oxIconsRegistry: OxIconsRegistry,
                 private readonly renderer: Renderer2,
-                @Optional() @Inject(DOCUMENT) private document: any) {
+                @Optional() @Inject(DOCUMENT) private readonly document: any) {
       this.iconClass = `ox-icon_${uuidv4()}`;
     }
 
     ngAfterViewInit(): void{
-      // console.log(this.name);
       if (this.icon?.nativeElement.textContent.trim() !== ''){
-        // this.name = this.icon?.nativeElement.textContent.trim();
         if (this.svgIcon) {
           this.element.nativeElement.removeChild(this.svgIcon);
         }
@@ -79,10 +74,6 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      // console.log(this.element.nativeElement);
-      // console.log(changes);
-      // console.log(changes.name?.currentValue);
-      // console.log(changes.name?.currentValue);
       if (changes.name?.currentValue){
         if (this.svgIcon) {
           this.element.nativeElement.removeChild(this.svgIcon);
@@ -90,13 +81,9 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         const svgData = this.oxIconsRegistry.getIcon(changes.name?.currentValue.trim());
         if (svgData) {
           this.svgIcon = this.svgElementFromString(svgData);
-          // this.svgIcon.children[1].setAttribute('stroke', 'blue');
-
-          // this.renderer.setAttribute( this.svgIcon.children[1], 'stroke', 'blue');
           this.element.nativeElement.appendChild(this.svgIcon);
         }
       } else {
-        // console.log( changes.svgStrokeColor?.currentValue);
         if (this.document.querySelector(`.${this.iconClass}`)){
           if (changes?.width && changes?.height){
             this.changeSize(this.document.querySelector(`.${this.iconClass}`),  changes?.width.currentValue, changes?.height.currentValue);
@@ -105,12 +92,6 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
           }else if (changes?.height){
             this.changeSize(this.document.querySelector(`.${this.iconClass}`),  changes?.height.currentValue, changes?.height.currentValue);
           }
-          // console.log(this.document.querySelector(`.${this.iconClass}`));
-          //  let childrenArray = Array.from(this.document.querySelector(`.${this.iconClass}`).children);
-          // childrenArray.map(x => {
-          //   console.log((x as HTMLElement).nodeName);
-          // });
-          // this.changeColor(this.document.querySelector(`.${this.iconClass}`).children[1], changes.svgStrokeColor?.currentValue);
         }
       }
     }
@@ -134,7 +115,6 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         const div = this.document.createElement('DIV');
         div.innerHTML = svgContent;
         this.renderer.addClass(div.querySelector('svg'), this.iconClass);
-        // this.changeColor(div.querySelector('svg').children[1],  color);
         if (this.width && this.height){
           this.changeSize(div.querySelector(`.${this.iconClass}`),  this.width, this.height);
         }else if (this.width){
