@@ -1,4 +1,8 @@
-<ox-icon class="static-anchor" name="anchor"></ox-icon>
-<ox-icon class="dots" name="dots_horizontal"></ox-icon>
-<ox-icon class="anchor">anchor</ox-icon>
+<ox-icon class="static-anchor" name="anchor" svgStrokeColor="purple"></ox-icon>
+<ox-icon class="dots" name="anchor" [svgStrokeColor]="color"></ox-icon>
+<ox-icon class="anchor" svgStrokeColor="black">anchor</ox-icon>
+<ox-icon svgStrokeColor="red">dots_horizontal</ox-icon>
+<ox-icon svgStrokeColor="green" name="dots_horizontal"></ox-icon>
+<ox-icon svgStrokeColor="blue">dots_horizontal</ox-icon>
 
+<button (click)="changeIcon()">Change Icon</button>

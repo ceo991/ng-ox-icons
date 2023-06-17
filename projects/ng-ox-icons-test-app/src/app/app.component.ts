@@ -1,6 +1,6 @@
 import { Component }                            from '@angular/core';
-import { OxIconsRegistry }                      from 'ng-ox-icons';
-import { oxIconsAnchor, oxIconsDotsHorizontal } from 'ox-icons';
+import { OxIconsRegistry }                               from 'ng-ox-icons';
+import { oxIcons, oxIconsAnchor, oxIconsDotsHorizontal } from 'ox-icons';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,13 @@ import { oxIconsAnchor, oxIconsDotsHorizontal } from 'ox-icons';
 })
 export class AppComponent {
   title = 'ng-ox-icons-test-app';
+  iconName: oxIcons = 'anchor';
+
+
+  // tslint:disable-next-line:typedef
+  color: string = 'green';
+  changeIcon() {
+    // this.iconName = 'dots_horizontal';
+    this.color = 'red';
+  }
 }
