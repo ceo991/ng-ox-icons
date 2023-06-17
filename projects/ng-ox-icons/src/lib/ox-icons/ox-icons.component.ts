@@ -135,7 +135,6 @@ export class OxIconsComponent implements AfterViewInit, OnChanges, AfterViewChec
         div.innerHTML = svgContent;
         this.renderer.addClass(div.querySelector('svg'), this.iconClass);
         // this.changeColor(div.querySelector('svg').children[1],  color);
-        console.log(div.querySelector(`.${this.iconClass}`), this.width, this.height);
         if (this.width && this.height){
           this.changeSize(div.querySelector(`.${this.iconClass}`),  this.width, this.height);
         }else if (this.width){
